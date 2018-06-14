@@ -1,0 +1,24 @@
+{extend name="public/base"}
+{block name='nav'}
+{include file="public/unav"}
+{/block}
+{block name="content"}
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="page-header">
+                <h3>用户中心</h3>
+            </div>
+            <div>
+                {:session('user_id')}
+            </div>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+
+    </div>
+</div>
+{/block}

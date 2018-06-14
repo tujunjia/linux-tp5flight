@@ -1,0 +1,51 @@
+{extend name="public/base"}
+{block name="nav"}
+{include file="public/anav"}
+{/block}
+{block name="content"}
+<div class="container">
+    <div class="col-md-8">
+        <div class="page-header">
+            <h3>管理员登录</h3>
+        </div>
+        <FORM method="post" class="login_form" class="form" style="width: 50%;">
+
+            <div class="form-group">
+                <label for="doc_title">手机号</label>
+                <input type="text" name="mobile" class="form-control" id="doc_title" placeholder="输入您的手机号">
+            </div>
+
+            <div class="form-group">
+                <label for="doc_password">密  码</label>
+                <input type="password" name="password" class="form-control" id="doc_password" placeholder="密码">
+            </div>
+            <input type="hidden" name="__token__" value="{$Request.token}" />
+            <INPUT type="button" class="btn btn-default login_btn" value="登录">
+            <div class="err_tips" ></div>
+        </FORM>
+    </div>
+</div>
+{/block}
+{block name="javaScript"}
+<script>
+    $('.login_btn').click(function(){
+        $.ajax({
+            type: 'post',
+            url: "{:url('index/admin/doLogin')}",
+            data: $(".login_form").serialize(),
+            dataType:'json',
+            success: function(data) {
+                if(data.status){
+                    $('.err_tips').html(data.msg);
+                    setTimeout(function(){
+                        window.location.href = "{:url('index/admin/index')}";
+                    },1000);
+                }
+                else{
+                    $('.err_tips').html(data.msg);
+                }
+            }
+        });
+    });
+</script>
+{/block}

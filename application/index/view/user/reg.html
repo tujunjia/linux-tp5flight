@@ -1,0 +1,60 @@
+{extend name="public/base"}
+{block name="nav"}
+{include file="public/unav"}
+{/block}
+{block name="content"}
+<div class="container">
+    <div class="col-md-8">
+        <div class="page-header">
+            <h3>用户注册</h3>
+        </div>
+        <form method="post" class="reg_form form" action="{:url('index/user/add')}" style="width: 50%;">
+            <div class="form-group">
+                <label for="">姓名</label>
+                <input type="text" name="username" class="form-control" id="" placeholder="输入您的用户名">
+            </div>
+            <div class="form-group">
+                <label for="">手机号</label>
+                <input type="text" name="mobile" class="form-control" id="" placeholder="输入您的手机号">
+            </div>
+            <div class="form-group">
+                <label for="">身份证号码</label>
+                <input type="text" name="id_card" class="form-control" id="" placeholder="输入您的身份证号">
+            </div>
+            <div class="form-group">
+                <label for="">密码</label>
+                <input type="password" name="password" class="form-control" id="" placeholder="密码">
+            </div>
+            <div class="form-group">
+                <label for="">再次输入</label>
+                <input type="password" name="password_confirm" class="form-control" id="" placeholder="密码">
+            </div>
+            <INPUT type="button" class="btn btn-default reg_btn" value="注册新用户">
+            <div class="err_tips"></div>
+        </form>
+    </div>
+</div>
+{/block}
+{block name="javaScript"}
+<script>
+    $('.reg_btn').click(function(){
+//        alert($(".reg_form").serialize());
+        $.ajax({
+            type: 'post',
+            url: "{:url('index/user/add')}",
+            data: $(".reg_form").serialize(),
+            success: function(data) {
+                if(data.status){
+                    $('.err_tips').html(data.msg);
+                    setTimeout(function(){
+                        window.location.href = "{:url('index/user/login')}";
+                    },1000);
+                }
+                else{
+                    $('.err_tips').html(data.msg);
+                }
+            }
+        });
+    });
+</script>
+{/block}
